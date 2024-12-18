@@ -1,0 +1,14 @@
+# Detect ICMP packets (ping)
+alert icmp any any -> any any (msg:"ICMP detected"; sid:1000001; rev:1;)
+
+# Detect unauthorized SSH login attempts
+alert tcp any any -> any 22 (msg:"Unauthorized SSH attempt"; flags:S; sid:1000002; rev:1;)
+
+# Detect HTTP traffic on non-standard ports
+alert tcp any any -> any !80 (msg:"Non-standard HTTP traffic detected"; content:"HTTP"; sid:1000003; rev:1;)
+
+# Detect Nmap port scanning
+alert tcp any any -> any any (msg:"Nmap Scan Detected"; flags:S; sid:1000004; rev:1; detection_filter:track by_src, count 20, seconds 10;)
+
+# Detect suspicious file downloads
+alert tcp any any -> any any (msg:"Suspicious File Download Detected"; content:"application/octet-stream"; sid:1000005; rev:1;)
